@@ -1,0 +1,57 @@
+🚀 End-to-End DevOps Project: Flask Portfolio Deployment on AWS
+I built my personal portfolio website using Python and Flask and containerized the application with Docker before pushing the image to Docker Hub.
+Using Terraform, I provisioned two AWS EC2 instances and leveraged Ansible to automate the configuration and deployment process. Ansible installed Docker on both servers, pulled the application image from Docker Hub, and launched the Flask application in containers.
+Finally, I successfully verified that my portfolio website was accessible through the public IP addresses of both EC2 instances on port 5000.
+🛠️ Tech Stack: Python | Flask | Docker | Docker Hub | Terraform | Ansible | AWS EC2
+This project strengthened my hands-on understanding of Infrastructure as Code (IaC), configuration management, containerization, and automated application deployment on AWS.
+
+
+
+| Concept                              | Why I Used It                                                                                                                                                                     |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Python + Flask**                   | Used Flask to build and serve my personal portfolio website as a lightweight web application.                                                                                     |
+| **Docker**                           | Containerized the Flask application so it could run consistently across different environments without manually configuring Python and dependencies on each server.               |
+| **Dockerfile**                       | Defined how the application image should be built, including the Python version, dependencies, application files, and startup command.                                            |
+| **Docker Hub**                       | Used as a container image registry to store the Docker image so the EC2 servers could pull the same application image during deployment.                                          |
+| **AWS EC2**                          | Used EC2 as the cloud infrastructure where my portfolio application actually runs. I deployed it on two separate EC2 instances.                                                   |
+| **AWS IAM**                          | Used IAM to create programmatic AWS access for Terraform/AWS CLI instead of using the root account credentials.                                                                   |
+| **AWS Security Group**               | Controlled network access to the EC2 instances, allowing SSH access and application traffic on port `5000`.                                                                       |
+| **SSH**                              | Used SSH for secure remote access and for Ansible to communicate with the EC2 servers.                                                                                            |
+| **AWS CLI**                          | Used to configure and verify AWS access from my local machine before working with Terraform.                                                                                      |
+| **Terraform**                        | Used Infrastructure as Code (IaC) to automatically create and manage the AWS infrastructure instead of manually creating EC2 instances from the AWS Console.                      |
+| **Terraform `count`**                | Used `count = 2` to create two EC2 instances from a single Terraform resource definition.                                                                                         |
+| **Terraform Outputs**                | Used outputs to retrieve the public IP addresses of the newly created EC2 instances, which were then added to the Ansible inventory.                                              |
+| **Ansible**                          | Used for configuration management and deployment across both EC2 servers from one machine.                                                                                        |
+| **Ansible Inventory**                | Defined the EC2 servers and their connection details so Ansible knew which machines to manage.                                                                                    |
+| **Ansible Playbook**                 | Automated the deployment process: install Docker → start Docker → pull image → remove old container → start new container.                                                        |
+| **Ansible Modules**                  | Used modules such as `apt`, `service`, `community.docker.docker_image`, and `community.docker.docker_container` instead of manually executing every server configuration command. |
+| **Multi-server Deployment**          | Deployed the same portfolio application to two EC2 instances, demonstrating how one deployment process can manage multiple servers.                                               |
+| **Port Mapping**                     | Mapped EC2 port `5000` to container port `5000` so the Flask application could be accessed from the internet.                                                                     |
+| **Container Logs & Troubleshooting** | Used `docker logs`, `docker ps`, `curl`, `systemctl`, and `ss` to verify the application and troubleshoot deployment issues.                                                      |
+| **Terraform Destroy**                | Used to remove the Terraform-managed AWS infrastructure when the project was no longer needed and avoid leaving unnecessary resources running.                                    |
+
+
+
+
+Overall Concept
+
+The main idea of the project was:
+
+Build → Containerize → Store → Provision Infrastructure → Configure Servers → Deploy → Verify
+
+Flask Portfolio Website
+        ↓
+      Docker
+        ↓
+    Docker Hub
+        ↓
+    Terraform
+        ↓
+   2 AWS EC2 Servers
+        ↓
+     Ansible
+        ↓
+      Docker
+        ↓
+Flask Portfolio Website
+   on both servers
