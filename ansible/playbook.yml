@@ -1,0 +1,40 @@
+- name: Configure EC2 server
+  hosts: webservers
+  become: true
+
+  tasks:
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: true
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+
+    - name: Pull application image
+      community.docker.docker_image:
+        name: riturps/my-own-images:portfolio-app-v3
+        source: pull
+
+    - name: Remove old container
+      community.docker.docker_container:
+        name: portfolio-app
+        state: absent
+
+    - name: Start application container
+      community.docker.docker_container:
+        name: portfolio-app
+        image: riturps/my-own-images:portfolio-app-v3
+        state: started
+        restart_policy: unless-stopped
+        ports:
+          - "5000:5000"
+
+    
+

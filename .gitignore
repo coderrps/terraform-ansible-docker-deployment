@@ -1,0 +1,28 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# SSH private keys
+*.pem
+id_rsa
+id_rsa.pub
+portfolio-key
+portfolio-key.pub
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
